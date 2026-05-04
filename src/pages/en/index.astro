@@ -55,16 +55,16 @@ const bergwieseImages = [
 ];
 
 const landhausImages = [
-  { src: lh1, alt: 'Musterhaus Sonnenschein Landhaus' },
-  { src: lh2, alt: 'Musterhaus Sonnenschein Garten' },
-  { src: lh3, alt: 'Musterhaus Sonnenschein Terrasse' },
-  { src: lh4, alt: 'Musterhaus Sonnenschein Umgebung' },
-  { src: lh5, alt: 'Musterhaus Sonnenschein Aussicht' },
-  { src: lh6, alt: 'Musterhaus Sonnenschein Eingang' },
+  { src: lh1, alt: 'Haus Sonnenschein Landhaus' },
+  { src: lh2, alt: 'Haus Sonnenschein Garten' },
+  { src: lh3, alt: 'Haus Sonnenschein Terrasse' },
+  { src: lh4, alt: 'Haus Sonnenschein Umgebung' },
+  { src: lh5, alt: 'Haus Sonnenschein Aussicht' },
+  { src: lh6, alt: 'Haus Sonnenschein Eingang' },
 ];
 
 const metadata = {
-  title: 'Musterhaus Sonnenschein – Holiday Apartments in Aschau im Chiemgau',
+  title: 'Haus Sonnenschein – Holiday Apartments in Aschau im Chiemgau',
   ignoreTitleTemplate: true,
 };
 ---
@@ -88,10 +88,10 @@ const metadata = {
       },
       { variant: 'primary', text: 'View Apartments', href: '#apartments' },
     ]}
-    image={{ src: '~/assets/images/hero-image.jpg', alt: 'Musterhaus Sonnenschein – Holiday Apartments in Aschau im Chiemgau' }}
+    image={{ src: '~/assets/images/hero-image.jpg', alt: 'Haus Sonnenschein – Holiday Apartments in Aschau im Chiemgau' }}
   >
     <Fragment slot="title">
-      <span class="text-primary dark:text-white">Willkommen in unserer Ferienwohnung</span>
+      <span class="text-primary dark:text-white">Willkommen im Haus Sonnenschein</span>
     </Fragment>
 
     <Fragment slot="subtitle">
@@ -112,12 +112,12 @@ const metadata = {
       </div>
 
       <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-lg text-default dark:text-slate-300 mb-8">
-        <span class="flex items-center gap-1.5"><Icon name="tabler:car" class="w-4 h-4" /> Parking</span>
         <span class="flex items-center gap-1.5"><Icon name="tabler:trees" class="w-4 h-4" /> Garden</span>
         <span class="flex items-center gap-1.5"><Icon name="tabler:sun" class="w-4 h-4" /> Terrace</span>
+        <span class="flex items-center gap-1.5"><Icon name="tabler:car" class="w-4 h-4" /> Parking</span>
+        <span class="flex items-center gap-1.5"><Icon name="tabler:paw" class="w-4 h-4" /> Pets allowed</span>
         <span class="flex items-center gap-1.5"><Icon name="tabler:flame" class="w-4 h-4" /> BBQ Area</span>
         <span class="flex items-center gap-1.5"><Icon name="tabler:mood-kid" class="w-4 h-4" /> Children welcome</span>
-        <span class="flex items-center gap-1.5"><Icon name="tabler:paw" class="w-4 h-4" /> Pets allowed</span>
         <span class="flex items-center gap-1.5"><Icon name="tabler:sparkles" class="w-4 h-4" /> 2025 renoviert</span>
       </div>
 
@@ -126,10 +126,9 @@ const metadata = {
           <ImageCarousel images={alpenpanoramaImages} id="alpenpanorama" />
           <div class="p-5">
             <h3 class="text-xl font-bold mb-2 dark:text-white">Alpenpanorama</h3>
-            <p class="text-sm text-muted dark:text-slate-400 mb-3">Unsere größte Wohnung im Erdgeschoss mit schönem Blick auf die Alpen. Ideal für Familien.</p>
+            <p class="text-sm text-muted dark:text-slate-400 mb-3"></p>
             <p class="text-sm font-semibold text-primary mb-3">From 75 € / night (1-2 pers.) · incl. 7% VAT</p>
             <div class="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted dark:text-slate-400 mb-4">
-              <span class="flex items-center gap-1"><Icon name="tabler:maximize" class="w-3.5 h-3.5" /> 110 m²</span>
               <span class="flex items-center gap-1"><Icon name="tabler:sofa" class="w-3.5 h-3.5" /> Living room</span>
               <span class="flex items-center gap-1"><Icon name="tabler:bed" class="w-3.5 h-3.5" /> Bedroom</span>
               <span class="flex items-center gap-1"><Icon name="tabler:tools-kitchen-2" class="w-3.5 h-3.5" /> Kitchen</span>
@@ -246,10 +245,9 @@ const metadata = {
           <ImageCarousel images={bergwieseImages} id="bergwiese" />
           <div class="p-5">
             <h3 class="text-xl font-bold mb-2 dark:text-white">Bergwiese</h3>
-            <p class="text-sm text-muted dark:text-slate-400 mb-3">Gemütliche Wohnung im Erdgeschoss mit Blick auf den Garten. Ideal für eine Auszeit zu zweit.</p>
+            <p class="text-sm text-muted dark:text-slate-400 mb-3"></p>
             <p class="text-sm font-semibold text-primary mb-3">From 60 € / night (1-2 pers.) · incl. 7% VAT</p>
             <div class="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted dark:text-slate-400 mb-4">
-              <span class="flex items-center gap-1"><Icon name="tabler:maximize" class="w-3.5 h-3.5" /> 20 m²</span>
               <span class="flex items-center gap-1"><Icon name="tabler:sofa" class="w-3.5 h-3.5" /> Living room</span>
               <span class="flex items-center gap-1"><Icon name="tabler:bed" class="w-3.5 h-3.5" /> Bedroom</span>
               <span class="flex items-center gap-1"><Icon name="tabler:tools-kitchen-2" class="w-3.5 h-3.5" /> Kitchen</span>
@@ -371,7 +369,7 @@ const metadata = {
   <section id="the-estate" class="py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 md:px-8">
       <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12">
-        <p class="text-base text-primary dark:text-blue-200 font-bold tracking-wide uppercase mb-2">Welcome to Musterhaus Sonnenschein</p>
+        <p class="text-base text-primary dark:text-blue-200 font-bold tracking-wide uppercase mb-2">Welcome to Haus Sonnenschein</p>
         <h2 class="text-4xl md:text-5xl font-bold tracking-tighter font-heading dark:text-gray-200">Your Home in Aschau im Chiemgau</h2>
       </div>
       <div class="md:flex md:flex-row-reverse md:gap-16">
@@ -405,13 +403,13 @@ const metadata = {
 
       <div class="rounded-lg overflow-hidden mx-auto mb-6" style="aspect-ratio: 16/9; max-width: 900px;">
         <iframe
-          title="Location of Musterhaus Sonnenschein"
+          title="Location of Haus Sonnenschein"
           width="100%"
           height="100%"
           style="border: 0;"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=12.3059,47.7665,12.3409,47.7865&layer=mapnik&marker=47.7765,12.3234"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=12.2840,47.7335,12.3190,47.7535&layer=mapnik&marker=47.7435,12.3015"
         ></iframe>
       </div>
 
@@ -433,7 +431,7 @@ const metadata = {
 
   <FAQs
     title="Frequently Asked Questions"
-    subtitle="Here you will find answers to the most important questions about your stay at Musterhaus Sonnenschein."
+    subtitle="Here you will find answers to the most important questions about your stay at Haus Sonnenschein."
     tagline="FAQ"
     classes={{ container: 'max-w-6xl' }}
     items={[
@@ -446,6 +444,16 @@ const metadata = {
         title: 'Is parking available?',
         description:
           'Ein kostenloser Parkplatz steht direkt am Haus zur Verfügung.',
+      },
+      {
+        title: 'Are pets allowed?',
+        description:
+          '15 € per night. Haustiere willkommen',
+      },
+      {
+        title: 'Are children welcome?',
+        description:
+          '25 € per night. Babybett auf Anfrage, bitte das Alter des Kindes mitteilen.',
       },
       {
         title: 'How can I book?',
@@ -472,7 +480,7 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="subtitle">
-      Secure your preferred dates at Musterhaus Sonnenschein. <br class="hidden md:inline" />
+      Secure your preferred dates at Haus Sonnenschein. <br class="hidden md:inline" />
       We look forward to your inquiry!
     </Fragment>
 
