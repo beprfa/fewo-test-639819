@@ -237,6 +237,12 @@ const terms = [
 
           <!-- BFW-492: AGB checkbox (only rendered when tenant has eigeneAgb=true and non-blank agbText). -->
           <!-- The block is collapsed by WebsiteContentReplacer when the marker value is empty. -->
+          <div class="flex items-start gap-2">
+            <input type="checkbox" id="agb" name="agb" required class="mt-1" />
+            <label for="agb" class="text-sm text-muted dark:text-slate-400">
+              Ich stimme den <a href="/agb" class="text-primary hover:underline">Allgemeinen Geschäftsbedingungen</a> zu. *
+            </label>
+          </div>
 
           <!-- BFW-351 honeypot: must stay empty. Real users never see / fill this. -->
           <div aria-hidden="true" style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;">
@@ -282,25 +288,24 @@ const terms = [
     const arrivalInput = document.getElementById('arrival') as HTMLInputElement | null;
     const departureInput = document.getElementById('departure') as HTMLInputElement | null;
     const dateError = document.getElementById('date-error');
-    // BFW-492: privacy + optional AGB checkbox + submit button gating.
+    // BFW-492 / BFW-501: privacy + optional AGB checkbox.
+    // Submit button stays enabled so a click always triggers feedback —
+    // missing consents surface as inline errors in the submit handler.
     const privacyCheckbox = document.getElementById('privacy') as HTMLInputElement | null;
     const agbCheckbox = document.getElementById('agb') as HTMLInputElement | null;
-    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
 
-    function datesAreValid(): boolean {
-      if (!arrivalInput?.value || !departureInput?.value) return false;
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const arrival = new Date(arrivalInput.value);
-      const departure = new Date(departureInput.value);
-      return arrival >= today && departure > arrival;
-    }
-
-    function updateSubmitButtonState() {
-      if (!submitBtn) return;
-      const privacyOk = privacyCheckbox?.checked === true;
-      const agbOk = !agbCheckbox || agbCheckbox.checked === true;
-      submitBtn.disabled = !(privacyOk && agbOk && datesAreValid());
+    // BFW-501: highlight a missing checkbox in red and clear the highlight
+    // when the user checks it.
+    function markCheckboxState(cb: HTMLInputElement | null, missing: boolean) {
+      if (!cb) return;
+      const wrapper = cb.closest('div');
+      if (missing) {
+        cb.classList.add('ring-2', 'ring-red-500', 'rounded');
+        wrapper?.classList.add('p-2', 'bg-red-50', 'rounded-lg');
+      } else {
+        cb.classList.remove('ring-2', 'ring-red-500', 'rounded');
+        wrapper?.classList.remove('p-2', 'bg-red-50', 'rounded-lg');
+      }
     }
 
     const isoDate = /^\d{4}-\d{2}-\d{2}$/;
@@ -427,11 +432,9 @@ const terms = [
     arrivalInput?.addEventListener('change', () => {
       syncDepartureMin();
       validateDates();
-      updateSubmitButtonState();
     });
     departureInput?.addEventListener('change', () => {
       validateDates();
-      updateSubmitButtonState();
     });
 
     // Live price line — mirrors the home-page priceCalculator widget so the
@@ -566,25 +569,51 @@ const terms = [
       }
     });
 
-    // BFW-492: gate submit on privacy + (optional) AGB + valid dates.
-    privacyCheckbox?.addEventListener('change', updateSubmitButtonState);
-    agbCheckbox?.addEventListener('change', updateSubmitButtonState);
+    // BFW-501: clear the red consent-error highlight as soon as the user checks the box.
+    privacyCheckbox?.addEventListener('change', () => {
+      if (privacyCheckbox.checked) markCheckboxState(privacyCheckbox, false);
+    });
+    agbCheckbox?.addEventListener('change', () => {
+      if (agbCheckbox.checked) markCheckboxState(agbCheckbox, false);
+    });
 
     // Initial services visibility + fetch when the form was prefilled from query params.
     updateServicesVisibility();
     if (apartmentSelect?.value && arrivalInput?.value && departureInput?.value) {
       fetchFormPrice();
     }
-    // BFW-492: ensure date inputs reflect the prefilled arrival's "min" + initial submit state.
+    // BFW-492: ensure date inputs reflect the prefilled arrival's "min".
     syncDepartureMin();
-    updateSubmitButtonState();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!validateDates()) return;
 
       errorMessage?.classList.add('hidden');
       successMessage?.classList.add('hidden');
+
+      // BFW-501: explicit consent validation with visible feedback.
+      // Order: privacy first, then AGB (if present), so the error names the first
+      // missing field and we scroll to it.
+      if (privacyCheckbox && !privacyCheckbox.checked) {
+        markCheckboxState(privacyCheckbox, true);
+        const errorText = document.getElementById('error-text');
+        if (errorText) errorText.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu, um Ihre Anfrage zu senden.';
+        errorMessage?.classList.remove('hidden');
+        privacyCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        privacyCheckbox.focus({ preventScroll: true });
+        return;
+      }
+      if (agbCheckbox && !agbCheckbox.checked) {
+        markCheckboxState(agbCheckbox, true);
+        const errorText = document.getElementById('error-text');
+        if (errorText) errorText.textContent = 'Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um Ihre Anfrage zu senden.';
+        errorMessage?.classList.remove('hidden');
+        agbCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        agbCheckbox.focus({ preventScroll: true });
+        return;
+      }
+
+      if (!validateDates()) return;
 
       const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
       if (submitBtn) submitBtn.disabled = true;

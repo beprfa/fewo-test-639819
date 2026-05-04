@@ -74,6 +74,7 @@ export const footerData = {
       links: [
         { text: 'Impressum', href: getPermalink('/terms') },
         { text: 'Datenschutz', href: getPermalink('/privacy') },
+{ text: 'AGB', href: getPermalink('/agb') },
       ],
     },
   ],
@@ -106,6 +107,7 @@ export const footerDataEn = {
       links: [
         { text: 'Legal Notice', href: getPermalink('/en/terms') },
         { text: 'Privacy Policy', href: getPermalink('/en/privacy') },
+{ text: 'Terms', href: getPermalink('/en/agb') },
       ],
     },
   ],
